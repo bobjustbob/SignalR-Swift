@@ -13,6 +13,35 @@ import Alamofire
 private typealias WebSocketStartClosure = (String?, Error?) -> ()
 
 public class WebSocketTransport: HttpTransport, WebSocketDelegate {
+    public func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocket) {
+        switch event {
+        case .connected(let headers):
+//            isConnected = true
+            print("websocket is connected: \(headers)")
+        case .disconnected(let reason, let code):
+//            isConnected = false
+            print("websocket is disconnected: \(reason) with code: \(code)")
+        case .text(let string):
+            print("Received text: \(string)")
+        case .binary(let data):
+            print("Received data: \(data.count)")
+        case .error(let error):
+            print("ERROR \(error?.localizedDescription)")
+//            isConnected = false
+//            handleError(error)
+        case .pong(_):
+            print("Recived pong")
+        case .ping(_):
+            print("Recived ping")
+        case .viabilityChanged(_):
+            print("Recived viabilityChanged")
+        case .reconnectSuggested(_):
+            print("Recived reconnectSuggested")
+        case .cancelled:
+            print("Recived cancelled")
+        }
+    }
+
     var reconnectDelay = 2.0
     private var connectionInfo: WebSocketConnectionInfo?
     private var webSocket: WebSocket?
