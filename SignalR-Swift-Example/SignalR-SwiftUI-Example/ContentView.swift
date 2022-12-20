@@ -10,26 +10,56 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var hubManager = ConnectionHubManager.shared
+    @State private var textToSend = "Sample text"
+    @State private var name = "John Doe"
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("STATUS: \(hubManager.statusMessage)")
-                .padding(20)
-            Text("MESSAGE: \(hubManager.chatMessage)")
-            Button("Start") {
-                hubManager.start()
+        NavigationStack {
+            VStack {
+                Form {
+                    Section("Name") {
+                        TextField("Name", text: $name)
+                    }
+                    Section("Send") {
+                        TextField("text to send", text: $textToSend)
+                        Button("Send Message") {
+                            hubManager.sendMessage(textToSend)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.top, 8)
+                    }
+                    Section("Received Messsages") {
+                    Text(hubManager.chatMessage)
+                        .frame(minHeight: 40.0)
+                    }
+                }
+                Spacer()
             }
+            .navigationTitle("Send Message")
             .padding()
-            .buttonStyle(.borderedProminent)
-            Button("Send Message") {
-                hubManager.sendMessage("This is a test")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Connect") {
+                        hubManager.connect(name)
+                    }
+                    .disabled(hubManager.isConnected || hubManager.isBusy)
+                    .padding()
+                    .buttonStyle(.borderedProminent)
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Disconnect") {
+                        hubManager.disconnect()
+                    }
+                    .disabled(hubManager.isDisconnected || hubManager.isBusy || hubManager.isRunning)
+                    .padding()
+                    .buttonStyle(.borderedProminent)
+                }
+                ToolbarItemGroup(placement:.bottomBar) {
+                    Text(hubManager.statusMessage)
+                        .padding(20)
+                }
             }
-            .padding()
-            .buttonStyle(.borderedProminent)
         }
-        .padding()
     }
 }
 
