@@ -19,18 +19,22 @@ struct ContentView: View {
                 Form {
                     Section("Name") {
                         TextField("Name", text: $name)
+                            .disabled(!hubManager.isConnected)
                     }
                     Section("Send") {
                         TextField("text to send", text: $textToSend)
+                            .disabled(!hubManager.isConnected)
                         Button("Send Message") {
                             hubManager.sendMessage(textToSend)
                         }
                         .buttonStyle(.borderedProminent)
                         .padding(.top, 8)
+                        .disabled(!hubManager.isConnected)
                     }
                     Section("Received Messsages") {
                     Text(hubManager.chatMessage)
                         .frame(minHeight: 40.0)
+                        .disabled(!hubManager.isConnected)
                     }
                 }
                 Spacer()
@@ -48,6 +52,7 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Disconnect") {
+                        textToSend = ""
                         hubManager.disconnect()
                     }
                     .disabled(hubManager.isDisconnected || hubManager.isBusy || hubManager.isRunning)
