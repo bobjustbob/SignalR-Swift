@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B77425E7198211D0AB52D77 /* Pods_SignalRSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C83886F3A73A4DD195ACBA05 /* Pods_SignalRSwift.framework */; };
 		563B87161F1FA11100D75CEF /* ServerSentEventsTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563B87151F1FA11100D75CEF /* ServerSentEventsTransport.swift */; };
 		568A77191F223CB2004F5D1C /* ChunkBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568A77181F223CB2004F5D1C /* ChunkBuffer.swift */; };
 		568A771B1F223CF0004F5D1C /* ServerSentEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568A771A1F223CF0004F5D1C /* ServerSentEvent.swift */; };
@@ -38,6 +39,7 @@
 		C9FC2D951E2025B80027FE59 /* AutoTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC2D941E2025B80027FE59 /* AutoTransport.swift */; };
 		C9FC2D971E2025DB0027FE59 /* HttpTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC2D961E2025DB0027FE59 /* HttpTransport.swift */; };
 		C9FC2D991E23BC600027FE59 /* ConnectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC2D981E23BC600027FE59 /* ConnectionDelegate.swift */; };
+		F349B65D8CDA64B81D114551 /* Pods_SignalR_SwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B13E803BDC5C3EF4C537881F /* Pods_SignalR_SwiftTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +59,9 @@
 		563B87151F1FA11100D75CEF /* ServerSentEventsTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSentEventsTransport.swift; sourceTree = "<group>"; };
 		568A77181F223CB2004F5D1C /* ChunkBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChunkBuffer.swift; path = "SignalR-Swift/Transports/ServerSentEvents/ChunkBuffer.swift"; sourceTree = SOURCE_ROOT; };
 		568A771A1F223CF0004F5D1C /* ServerSentEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerSentEvent.swift; path = "SignalR-Swift/Transports/ServerSentEvents/ServerSentEvent.swift"; sourceTree = SOURCE_ROOT; };
+		B13E803BDC5C3EF4C537881F /* Pods_SignalR_SwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SignalR_SwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9B649DF0F8A7E41F534F0A /* Pods-SignalRSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SignalRSwift.release.xcconfig"; path = "Target Support Files/Pods-SignalRSwift/Pods-SignalRSwift.release.xcconfig"; sourceTree = "<group>"; };
+		C83886F3A73A4DD195ACBA05 /* Pods_SignalRSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SignalRSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C91154621E24113F007C0DD9 /* WebSocketTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTransport.swift; sourceTree = "<group>"; };
 		C91154651E241239007C0DD9 /* WebSocketConnectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketConnectionInfo.swift; sourceTree = "<group>"; };
 		C91154671E243082007C0DD9 /* ReceivedMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceivedMessage.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B77425E7198211D0AB52D77 /* Pods_SignalRSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9330B321E1FE59A00B1F2D5 /* SignalRSwift.framework in Frameworks */,
+				F349B65D8CDA64B81D114551 /* Pods_SignalR_SwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +142,8 @@
 		B7D1214F5724602EDD3E0C77 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B13E803BDC5C3EF4C537881F /* Pods_SignalR_SwiftTests.framework */,
+				C83886F3A73A4DD195ACBA05 /* Pods_SignalRSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

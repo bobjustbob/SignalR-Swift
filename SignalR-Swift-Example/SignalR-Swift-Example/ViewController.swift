@@ -21,13 +21,18 @@ class ViewController: UIViewController {
     var connection: HubConnection!
     var name: String!
 
+//    let serverURL = "http://swiftr.azurewebsites.net"
+//    let hubName   = "chatHub"
+    let serverURL = "http://10.0.1.23:8080/kioskHub"
+    let hubName   = "kioskHub"
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        connection = HubConnection(withUrl: "http://swiftr.azurewebsites.net") //SignalR("http://swiftr.azurewebsites.net")
+        connection = HubConnection(withUrl: serverURL) //SignalR("http://swiftr.azurewebsites.net")
         //        connection.signalRVersion = .v2_2_0
 
-        chatHub = self.connection.createHubProxy(hubName: "chatHub")
+        chatHub = self.connection.createHubProxy(hubName: hubName)
         _ = chatHub.on(eventName: "broadcastMessage") { (args) in
             if let name = args[0] as? String, let message = args[1] as? String, let text = self.chatTextView.text {
                 self.chatTextView.text = "\(text)\n\n\(name): \(message)"
@@ -70,7 +75,7 @@ class ViewController: UIViewController {
             }
         }
 
-        connection.start()
+//        connection.start()
     }
 
     override func viewDidAppear(_ animated: Bool) {
