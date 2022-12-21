@@ -10,7 +10,7 @@ import SwiftUI
 import SignalRSwift
 
 enum ConnectionStatus: String {
-    case notRunning, running, busy, connected, disconnected, error
+    case notRunning, running, connected, disconnected, error
 }
 
 class ConnectionHubManager: ObservableObject {
@@ -22,15 +22,14 @@ class ConnectionHubManager: ObservableObject {
     @Published var statusMessage    = ""
     @Published var chatMessage      = ""
     @Published var status           = ConnectionStatus.notRunning
+    @Published var isBusy           = false
     var isRunning: Bool             { status == .running }
     var isConnected: Bool           { status == .connected }
-    var isBusy: Bool                { status == .busy }
     var isDisconnected: Bool        { status == .disconnected }
 
     let serverURL = "http://swiftr.azurewebsites.net"
     let hubName   = "chatHub"
-//    let serverURL = "http://10.0.1.23:8080/kioskHub"
-//    let hubName   = "kioskHub"
+
 
     init() {
         start()
@@ -38,13 +37,13 @@ class ConnectionHubManager: ObservableObject {
 
     func connect(_ name: String) {
         clientUserName = name
-        status = .busy
         statusMessage = "Connecting..."
+        isBusy = true
         connection.start()
     }
 
     func disconnect() {
-        status = .busy
+        isBusy = true
         statusMessage = "Disconnecting..."
         connection.stop()
     }
@@ -58,7 +57,7 @@ class ConnectionHubManager: ObservableObject {
     func start() {
         guard isRunning == false else { return }
 
-        status = .busy
+        isBusy = true
         statusMessage = "Starting..."
         connection = HubConnection(withUrl: serverURL) //SignalR("http://swiftr.azurewebsites.net")
         //        connection.signalRVersion = .v2_2_0
@@ -80,35 +79,33 @@ class ConnectionHubManager: ObservableObject {
 
         connection.started = { [unowned self] in
             self.status = .connected
+            self.isBusy = false
             self.statusMessage = "Connected"
             print("BJW status: \((self.statusMessage))")
         }
 
         connection.reconnecting = { [unowned self] in
-            self.status = .busy
+            self.isBusy = true
             self.statusMessage = "Reconnecting..."
         }
 
         connection.reconnected = { [unowned self] in
+            self.isBusy = false
             self.status = .connected
             self.statusMessage = "Reconnected. Connection ID: \(self.connection!.connectionId!)"
-//            self.startButton.isEnabled = true
-//            self.startButton.title = "Stop"
-//            self.sendButton.isEnabled = true
         }
 
         connection.closed = { [unowned self] in
             self.status = .disconnected
+            self.isBusy = false
             self.statusMessage = "Disconnected"
             print("BJW status: \((self.statusMessage))")
-//            self.startButton.isEnabled = true
-//            self.startButton.title = "Start"
-//            self.sendButton.isEnabled = false
         }
 
         connection.connectionSlow = { print("Connection slow...") }
 
         connection.error = { [unowned self] error in
+            self.isBusy = false
             self.status = .error
             let anError = error as NSError
             if anError.code == NSURLErrorTimedOut {
@@ -116,7 +113,7 @@ class ConnectionHubManager: ObservableObject {
             }
         }
         status = .running
+        isBusy = false
         statusMessage = "Running"
     }
-
 }
