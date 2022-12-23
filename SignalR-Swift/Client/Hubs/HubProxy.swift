@@ -42,11 +42,11 @@ public class HubProxy: HubProxyProtocol {
     
     // MARK: - Publish
     
-    public func invoke(method: String, withArgs args: [Any]) {
+    public func invoke(method: String, withArgs args: [Any]) -> Void {
         self.invoke(method: method, withArgs: args, completionHandler: nil)
     }
     
-    public func invoke(method: String, withArgs args: [Any], completionHandler: ((Any?, Error?) -> ())?) {
+    public func invoke(method: String, withArgs args: [Any], register: Bool = true, completionHandler: ((Any?, Error?) -> ())?) {
         guard !method.isEmpty else {
             NSException.raise(.invalidArgumentException, format: NSLocalizedString("Argument method is null", comment: "null event name exception"), arguments: getVaList(["nil"]))
             return
@@ -74,6 +74,10 @@ public class HubProxy: HubProxyProtocol {
                                     method: method,
                                     args: args,
                                     state: self.state)
+
+        if (!register) {
+            connection.removeCallback(callbackId: callbackId)
+        }
         
         connection.send(object: hubData.toJSONString()!, completionHandler: completionHandler)
     }
