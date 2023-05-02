@@ -37,6 +37,8 @@ public class HubProxy: HubProxyProtocol {
     public func invokeEvent(eventName: String, withArgs args: [Any]) {
         if let subscription = self.subscriptions[eventName] {
             subscription(args)
+        } else {
+            print("BJWBJWBJW unhandled event: \(eventName)")
         }
     }
     
